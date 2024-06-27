@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Methods</title>
+    </head>
+    <body>
+        <script>
+
+  function getasiancountries() {
+  const xhr=new XMLHttpRequest();
+
+  xhr.open("GET","https://restcountries.com/v3.1/all",true);
+  xhr.onload=function() {
+
+    if (xhr.status>=200&&xhr.status<300) {
+
+      let countries=JSON.parse(xhr.responseText);
+
+      let asianCountries=countries.filter(country =>country.region.toLowerCase() === 'asia');
+      console.log('Asian Countries:',asianCountries);
+
+      let lowPopulationCountries=countries.filter(country => country.population<200000);
+      console.log("low population",lowPopulationCountries);
+
+      let usdcountries=countries.filter(country => country.currecy==="USD");
+      console.log("usd countries",countries);
+
+      let totalPopulation=asianCountries.reduce((accumulator,country) => accumulator+country.population,0);
+      console.log("totalPopulation",totalPopulation);
+    }
+    else {
+      console.error("Error");
+    }
+    };
+
+    xhr.onerror = function(error) {
+    console.error('Error fetching countries:',error); 
+    };
+  xhr.send();
+}
+
+getasiancountries(); 
+         </script>
+    </body>
+</html>
